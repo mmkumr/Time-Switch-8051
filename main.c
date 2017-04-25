@@ -1,14 +1,14 @@
 #include <reg52.h>
-#include <lcd.h>
+#include "lcd.h"
 #include <stdio.h>
 #include <string.h>
 
-sbit RS = P0^0;
-sbit EN = P0^1;
-sbit D4 = P2^4;
-sbit D5 = P2^5;
-sbit D6 = P2^6;
-sbit D7 = P2^7;
+sbit RS = P2^0;
+sbit EN = P2^1;
+sbit D4 = P2^2;
+sbit D5 = P2^3;
+sbit D6 = P2^4;
+sbit D7 = P2^5;
 
 sbit RB0 = P3^0;
 sbit RB1 = P3^1;
