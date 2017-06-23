@@ -21,6 +21,6 @@ Burn the hex file to 8051 microcontroller. Hex file is present in the folder 'gi
 
 Set the time using six button which are connected for increasing and decreasing of hours, minutes and seconds.
 
-Turn on the enable switch.
+Turn on the enable switch(switch connected to port 3.6).
 
-Switch on the button which is connect to port1.0 pin of 8051 for keeping the AC device in ON condition intially and will be OFF after your setted time will complete. OFF the switch if you want to keep the device OFF at initial condition after setted time will complete it will remain ON until you turn OFF.
+Switch on the button which is connect to port3.7 pin of 8051 for keeping the AC device in ON condition intially and will be OFF after your setted time will complete. OFF the switch if you want to keep the device OFF at initial condition after setted time will complete it will remain ON until you turn OFF.
