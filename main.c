@@ -72,7 +72,7 @@ int main() {
         hour:
         hh++;
         itoa(hh,strh);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     else if(hoursn == 0) {
@@ -84,7 +84,7 @@ int main() {
             goto start;
         }
         itoa(hh,strh);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     else if(minutesp == 0) {
@@ -97,7 +97,7 @@ int main() {
             goto hour;
         }
         itoa(mm,strm);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     else if(minutesn == 0) {
@@ -109,7 +109,7 @@ int main() {
             goto start;
         }
         itoa(mm,strm);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     else if(secondsp == 0) {
@@ -121,7 +121,7 @@ int main() {
             goto minute;
         }
         itoa(ss,strs);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     else if(secondsn == 0) {
@@ -133,7 +133,7 @@ int main() {
             goto start;
         }
         itoa(ss,strs);
-        Delay(500);
+        Delay(50);
         goto here;
     }
     // This while loop will start when enable switch is on. This while loop will work as timer
@@ -150,10 +150,10 @@ int main() {
         }
         if(ss > 0) {
             --ss;
-            Delay(1000);
+            Delay(100);
         }
         else if(ss == 0 && mm > 0) {
-            Delay(1000);
+            Delay(100);
              --mm;
              ss = 59;
         }
