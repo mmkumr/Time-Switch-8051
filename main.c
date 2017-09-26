@@ -2,14 +2,14 @@
 #include "lcd.h"
 #include <stdio.h>
 #include <string.h>
-
+//LCD
 sbit RS = P0^0;
 sbit EN = P0^1;
 sbit D4 = P2^4;
 sbit D5 = P2^5;
 sbit D6 = P2^6;
 sbit D7 = P2^7;
-
+//Switches
 sbit hoursp = P3^0;
 sbit hoursn = P3^1;
 sbit minutesp = P3^2;
@@ -17,8 +17,8 @@ sbit minutesn = P3^3;
 sbit secondsp = P3^4;
 sbit secondsn = P3^5;
 sbit enable = P3^6;
-sbit relay = P3^7;
-sbit signal = P1^0;
+sbit relay = P3^7;// For deciding to keep a device initially ON or OFF
+sbit signal = P1^0;//This bit used for sending 0 or 1 to transistor for activating relay
 
 char* itoa(int n,char s[]) {
     int i = 0 ,k = 0,td = n;
@@ -52,15 +52,15 @@ int main() {
     int hh = 0,mm = 0,ss = 0;
     char strh[3],strm[3],strs[3];
     /*
-     * P3^0 = Hours+
-     * P3^1 = Hours-
-     * P3^2 = Minutes+
-     * P3^3 = Minutes-
-     * P3^4 = Seconds+
-     * P3^5 = Seconds-
-     * P3^6 = Starting timer
-		 * P3^7 = Relay control
-		 * P1^0 = Transistor circuit connected
+     * P3^0 = Hours+ switch
+     * P3^1 = Hours- switch
+     * P3^2 = Minutes+ switch
+     * P3^3 = Minutes- switch
+     * P3^4 = Seconds+ switch
+     * P3^5 = Seconds- switch
+     * P3^6 = Starting timer switch
+	 * P3^7 = Relay control switch
+	 * P1^0 = Transistor circuit connected
      */
     Lcd4_Init();
     Lcd4_Clear();
@@ -180,7 +180,7 @@ int main() {
     }
     //End of detection which switch has pressed
     goto start;//This line will execute until any switch is pressed.
-    { // when any switch is pressed then this block of cod will execute
+    { // when any switch is pressed then this block of code will execute
       here:
       Lcd4_Clear();
       Lcd4_Set_Cursor(1,1);
