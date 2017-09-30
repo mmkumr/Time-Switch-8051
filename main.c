@@ -196,5 +196,4 @@ int main() {
       goto start;
      }
   
-  return 0;
 }
