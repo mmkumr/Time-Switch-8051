@@ -43,14 +43,26 @@ char* itoa(int n,char s[]) {
     return s;
 }
 
-void Delay(unsigned int a) {
-	unsigned int j,i;
-		for(i=0;i<a;i++) 
-			for(j=0;j<1275;j++) ;
+void Delay(int a) {
+	int i;
+	for(i = 0; i < a; i++) {
+		int j;
+		for(j = 0; j < 1000; j++)
+			{
+				TMOD = 0x01;    // Timer 0 Mode 1
+				TH0= 0xFC;     //initial value for 1ms
+				TL0 = 0x66;
+				TR0 = 1;     // timer start
+				while (TF0 == 0); // check overflow condition
+				TR0 = 0;    // Stop Timer
+				TF0 = 0;   // Clear flag
+			}
+	}
 }
 int main() {
-    int hh = 0,mm = 0,ss = 0;
+    signed int hh = 0,mm = 0,ss = 0, sec = 1;
     char strh[3],strm[3],strs[3];
+
     /*
      * P3^0 = Hours+ switch
      * P3^1 = Hours- switch
@@ -66,13 +78,17 @@ int main() {
     Lcd4_Clear();
     Lcd4_Set_Cursor(1,1);
     Lcd4_Write_String("Time switch");
+		Lcd4_Set_Cursor(2,1);
+    Lcd4_Write_String("By MMK");
     //Detecting which switch is pressed
     start:
     if(hoursp == 0) {
         hour:
         hh++;
         itoa(hh,strh);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     else if(hoursn == 0) {
@@ -84,7 +100,9 @@ int main() {
             goto start;
         }
         itoa(hh,strh);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     else if(minutesp == 0) {
@@ -97,7 +115,9 @@ int main() {
             goto hour;
         }
         itoa(mm,strm);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     else if(minutesn == 0) {
@@ -109,7 +129,9 @@ int main() {
             goto start;
         }
         itoa(mm,strm);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     else if(secondsp == 0) {
@@ -121,7 +143,9 @@ int main() {
             goto minute;
         }
         itoa(ss,strs);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     else if(secondsn == 0) {
@@ -133,12 +157,16 @@ int main() {
             goto start;
         }
         itoa(ss,strs);
-        Delay(50);
+				if(enable == 1){
+					Delay(1);
+				}
         goto here;
     }
     // This while loop will start when enable switch is on. This while loop will work as timer
     signal = 0;
-    while(enable == 0) {
+	
+		timer:
+    if(enable == 0) {
         int status = 0;
         if(relay == 0) {
             status = 1;
@@ -150,16 +178,17 @@ int main() {
         }
         if(ss > 0) {
             --ss;
-            Delay(100);
+            Delay(sec);
         }
         else if(ss == 0 && mm > 0) {
-            Delay(100);
+            Delay(sec);
              --mm;
              ss = 59;
         }
         else if(mm == 0 && hh > 0) {
-            --hh;
-            mm = 59;
+						Delay(sec);
+						--hh;
+						mm = 59;
         }
         else if(hh == 0 && mm == 0 && ss == 0) {
             signal = !status;
@@ -193,7 +222,17 @@ int main() {
       Lcd4_Write_Char(':');
       Lcd4_Set_Cursor(1,7);
       Lcd4_Write_String(strs);
+			Lcd4_Set_Cursor(2,1);
+			if(signal == 0) {
+      Lcd4_Write_String("off");
+			}
+			else if(signal == 1) {
+      Lcd4_Write_String("on");
+			}
+			if(enable == 0) {
+				goto timer;
+			}
       goto start;
      }
-  
+	return 0;
 }
